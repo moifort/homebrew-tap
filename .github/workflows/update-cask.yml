@@ -1,0 +1,45 @@
+name: Update the Dictate cask
+
+# Every hour, compare the cask with the latest Dictate release; when a newer
+# version is out, download its disk image, rewrite version and sha256, commit.
+# No secret needed: the workflow only writes to this repository.
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-cask
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Bump the cask to the latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          CASK=Casks/dictate.rb
+          CURRENT=$(sed -n 's/^  version "\(.*\)"$/\1/p' "$CASK")
+          LATEST=$(gh release view --repo moifort/dictate --json tagName -q '.tagName' | sed 's/^v//')
+          echo "Cask: $CURRENT — latest release: $LATEST"
+          if [ "$CURRENT" = "$LATEST" ]; then
+            echo "Nothing to do"; exit 0
+          fi
+          gh release download "v$LATEST" --repo moifort/dictate --pattern "Dictate-$LATEST.dmg" --clobber
+          SHA=$(sha256sum "Dictate-$LATEST.dmg" | cut -d' ' -f1)
+          rm -f "Dictate-$LATEST.dmg"
+          sed -i "s/^  version \".*\"$/  version \"$LATEST\"/; s/^  sha256 \".*\"$/  sha256 \"$SHA\"/" "$CASK"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$CASK"
+          git commit -m "dictate $LATEST"
+          git push
