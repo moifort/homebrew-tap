@@ -1,13 +1,14 @@
 # moifort/tap
 
-Homebrew casks for [Dictate](https://moifort.github.io/dictate/), push-to-talk
-dictation for the Mac.
+Homebrew casks for [Dictate](https://dictate.polyforms.co/), push-to-talk
+dictation for the Mac, and [Stats](https://stats.polyforms.co/), CPU, network,
+memory and disk charts in the menu bar.
 
 ```bash
 brew install --cask moifort/tap/dictate
+brew install --cask moifort/tap/minimal-stats
 ```
 
-The cask follows the [latest release](https://github.com/moifort/dictate/releases/latest)
-automatically: a workflow checks every hour and bumps the version and checksum.
-Dictate then updates itself, so `brew upgrade` leaves it alone unless run with
-`--greedy`.
+Each cask follows its app's latest release automatically: a workflow checks
+every hour and bumps the version and checksum. Both apps then update
+themselves, so `brew upgrade` leaves them alone unless run with `--greedy`.
