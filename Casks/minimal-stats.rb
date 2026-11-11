@@ -1,8 +1,8 @@
 # The token is minimal-stats, not stats: homebrew/cask's `stats` (exelban)
 # installs another app also named Stats.app.
 cask "minimal-stats" do
-  version "1.12.0"
-  sha256 "05c0093669f75bd782c9f253208e8f9366e40686f0476ba7e6b37698aa28cdee"
+  version "1.12.3"
+  sha256 "b5e5956a45605cf8f5db429ac9c3e695776450aab60463cb6c5a402ef8708b7b"
 
   url "https://github.com/moifort/minimal-stats/releases/download/v#{version}/Stats.dmg"
   name "Stats"
