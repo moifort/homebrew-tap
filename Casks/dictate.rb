@@ -1,6 +1,6 @@
 cask "dictate" do
-  version "1.9.0"
-  sha256 "bf1500d65d0c69c30c44d3ce3b8c7f2c05a0d7bc0fa527774e1cd7577f8dab10"
+  version "1.10.0"
+  sha256 "5f870d07908f425036f2bf763150c10166b983681556a80b4365d2f97f062ff8"
 
   url "https://github.com/moifort/dictate/releases/download/v#{version}/Dictate-#{version}.dmg"
   name "Dictate"
